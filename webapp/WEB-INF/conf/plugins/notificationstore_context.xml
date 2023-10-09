@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" >
+
+
+    <bean id="grustoragedb.demandDao" class="fr.paris.lutece.plugins.grustoragedb.business.DemandDAO" />
+    <bean id="grustoragedb.notificationDao" class="fr.paris.lutece.plugins.grustoragedb.business.NotificationDAO" />
+    <bean id="grustoragedb.notificationEventDao" class="fr.paris.lutece.plugins.grustoragedb.business.NotificationEventDAO" />
+    <bean id="grustoragedb.statusDao"  class="fr.paris.lutece.plugins.grustoragedb.business.StatusDAO" />
+    <bean id="grustoragedb.demandTypeDao" class="fr.paris.lutece.plugins.grustoragedb.business.DemandTypeDAO"/>
+	<bean id="grustoragedb.demandCategoryDao" class="fr.paris.lutece.plugins.grustoragedb.business.DemandCategoryDAO"/>
+    <bean id="grustoragedb.notificationContentDao" class="fr.paris.lutece.plugins.grustoragedb.business.NotificationContentDAO"/>
+
+	<bean id="gru.demandService" class="fr.paris.lutece.plugins.grustoragedb.service.DemandService" >
+		<property name="demandDao">
+			<ref bean="grustoragedb.demandDao" />
+		</property>
+		<property name="notificationDao">
+			<ref bean="grustoragedb.notificationDao" />
+		</property>
+		<property name="notificationEventDao">
+			<ref bean="grustoragedb.notificationEventDao" />
+		</property>
+		<property name="statusDao">
+			<ref bean="grustoragedb.statusDao" />
+		</property>
+		<property name="demandTypeDao">
+			<ref bean="grustoragedb.demandTypeDao" />
+		</property>
+	</bean>
+	
+  <bean id="gru.demandRestService" class="fr.paris.lutece.plugins.notificationstore.web.rs.DemandNotificationRestService"/>
+
+</beans>

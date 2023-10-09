@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plug-in>
+    <name>notificationstore</name>
+    <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
+    <version>1.0.0-SNAPSHOT</version>
+    <documentation></documentation>
+    <installation></installation>
+    <changes></changes>
+    <user-guide></user-guide>
+    <description>notificationstore.plugin.description</description>
+    <provider>notificationstore.plugin.provider</provider>
+    <provider-url>https://lutece.paris.fr/lutece/</provider-url>
+    <icon-url>images/admin/skin/feature_default_icon.png</icon-url>
+    <copyright>(c) 2023 - Ville de Paris</copyright>
+    <db-pool-required>1</db-pool-required>
+    
+    <core-version-dependency>
+        <min-core-version>6.0.0</min-core-version>
+        <max-core-version/>
+    </core-version-dependency>
+
+     <daemons>
+	    <daemon>
+	        <daemon-id>NotificationEventDaemon</daemon-id>
+	        <daemon-name>grustoragedb.daemon.NotificationEventDaemon.name</daemon-name>
+	        <daemon-description>grustoragedb.daemon.NotificationEventDaemon.description</daemon-description>
+	        <daemon-class>fr.paris.lutece.plugins.grustoragedb.service.NotificationEventDaemon</daemon-class>
+	    </daemon>
+	</daemons>
+    <admin-features>
+        <admin-feature>
+            <feature-id>GRUSTORAGEDB_MANAGEMENT</feature-id>
+            <feature-title>grustoragedb.adminFeature.Manage.name</feature-title>
+            <feature-description>grustoragedb.adminFeature.Manage.description</feature-description>
+            <feature-level>0</feature-level>
+            <feature-url>jsp/admin/plugins/grustoragedb/ManageStatus.jsp</feature-url>
+            <feature-icon-url></feature-icon-url>
+        </admin-feature>
+		<admin-feature>
+			<feature-id>GRUSTORAGEDB_MANAGEMENT</feature-id>
+			<feature-title>grustoragedb.adminFeature.ManageDemandType.name</feature-title>
+			<feature-description>grustoragedb.adminFeature.ManageDemandType.description</feature-description>
+			<feature-level>0</feature-level>
+			<feature-url>jsp/admin/plugins/grustoragedb/ManageDemandTypes.jsp</feature-url>
+			<feature-icon-url/>
+		</admin-feature>
+    </admin-features>
+
+</plug-in>
