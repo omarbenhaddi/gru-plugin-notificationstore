@@ -84,7 +84,7 @@ public class CustomerProvider
     private static final String ATTRIBUTE_IDENTITY_BIRTHDATE = AppPropertiesService.getProperty( PROPERTIES_ATTRIBUTE_USER_BIRTHDATE );
 
     // Service identityStore
-    private static final String BEAN_IDENTITYSTORE_SERVICE = "grusupply.identitystore.service";
+    private static final String BEAN_IDENTITYSTORE_SERVICE = "notificationstore.identitystore.service";
     private static CustomerProvider _singleton;
     private static boolean bIsInitialized = false;
     private static List<ICustomerEncryptionService> _listCustomerEncryption;

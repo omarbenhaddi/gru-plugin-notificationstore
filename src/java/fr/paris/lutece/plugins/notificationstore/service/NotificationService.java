@@ -275,7 +275,7 @@ public class NotificationService
 			mapper.configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false );
 
 			NotificationEvent notificationEvent = mapper.readValue( strJson, NotificationEvent.class );
-			AppLogService.debug( "grusupply / notificationEvent - Received strJson : " + strJson );
+			AppLogService.debug( "notificationstore / notificationEvent - Received strJson : " + strJson );
 
 			store( notificationEvent );
 
@@ -581,7 +581,7 @@ public class NotificationService
      */
     private Notification getNotificationFromJson( String strJson ) throws JsonMappingException, JsonProcessingException
     {
-    	AppLogService.debug( "grusupply / notification - Received strJson : " + strJson );
+    	AppLogService.debug( "notificationstore / notification - Received strJson : " + strJson );
     	
     	// Format from JSON
 		ObjectMapper mapper = new ObjectMapper( );
