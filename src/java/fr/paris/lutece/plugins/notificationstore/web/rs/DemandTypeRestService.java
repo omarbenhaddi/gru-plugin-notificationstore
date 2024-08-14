@@ -50,6 +50,7 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.grubusiness.business.demand.DemandType;
+import fr.paris.lutece.plugins.identitystore.v3.web.rs.util.Constants;
 import fr.paris.lutece.plugins.notificationstore.business.DemandTypeHome;
 import fr.paris.lutece.plugins.notificationstore.utils.NotificationStoreConstants;
 import fr.paris.lutece.plugins.rest.service.RestConstants;
@@ -62,7 +63,7 @@ import fr.paris.lutece.util.json.JsonUtil;
  * Service Rest DemandTypeRestService
  *
  */
-@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.PATH_DEMAND_TYPE )
+@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.VERSION_PATH_V3 + NotificationStoreConstants.PATH_DEMAND_TYPE )
 public class DemandTypeRestService
 {
 
@@ -74,7 +75,6 @@ public class DemandTypeRestService
      * @return the DemandType List
      */
     @GET
-    @Path( StringUtils.EMPTY )
     @Produces( MediaType.APPLICATION_JSON )
     public Response getDemandTypeList( )
     {

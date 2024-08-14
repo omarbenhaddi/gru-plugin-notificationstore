@@ -33,7 +33,7 @@
 	
 		<!--  Status REST  -->
  	<bean id="notificationstore.statusRest" class="fr.paris.lutece.plugins.notificationstore.web.rs.StatusRestService" />
-    <bean id="notificationstore.demandRestService" class="fr.paris.lutece.plugins.notificationstore.web.rs.DemandNotificationRestService"/>
+    <bean id="notificationstore.demandRestService" class="fr.paris.lutece.plugins.notificationstore.web.rs.DemandRestService"/>
     <bean id="notificationstore.grurestdatabase" class="fr.paris.lutece.plugins.notificationstore.web.rs.NotificationRestService"/>
     <bean id="notificationstore.demandTypeRestService" class="fr.paris.lutece.plugins.notificationstore.web.rs.DemandTypeRestService"/>
     <bean id="notificationstore.demandCategoryRestService" class="fr.paris.lutece.plugins.notificationstore.web.rs.DemandCategoryRestService"/>

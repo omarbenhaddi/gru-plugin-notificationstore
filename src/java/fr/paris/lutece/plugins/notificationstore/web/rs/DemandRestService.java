@@ -57,6 +57,7 @@ import fr.paris.lutece.plugins.grubusiness.business.web.rs.DemandResult;
 import fr.paris.lutece.plugins.grubusiness.business.web.rs.EnumGenericStatus;
 import fr.paris.lutece.plugins.grubusiness.business.web.rs.NotificationResult;
 import fr.paris.lutece.plugins.grubusiness.business.web.rs.SearchResult;
+import fr.paris.lutece.plugins.grubusiness.business.web.rs.responseStatus.ResponseStatusFactory;
 import fr.paris.lutece.plugins.notificationstore.business.DemandHome;
 import fr.paris.lutece.plugins.notificationstore.business.NotificationHome;
 import fr.paris.lutece.plugins.notificationstore.business.StatusHome;
@@ -73,8 +74,8 @@ import fr.paris.lutece.util.html.Paginator;
  * Service Rest DemandNotificationRestService
  *
  */
-@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.PATH_DEMAND )
-public class DemandNotificationRestService
+@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.VERSION_PATH_V3 + NotificationStoreConstants.PATH_DEMAND )
+public class DemandRestService
 {
 
     /**
@@ -84,7 +85,7 @@ public class DemandNotificationRestService
      * @param strPage
      */
     @GET
-    @Path( NotificationStoreConstants.PATH_DEMAND_LIST )
+    @Path( NotificationStoreConstants.PATH_LIST )
     @Produces( MediaType.APPLICATION_JSON )
     public Response getListDemand( @QueryParam( NotificationStoreConstants.QUERY_PARAM_ID_DEMAND_TYPE ) String strIdDemandType,
             @QueryParam( NotificationStoreConstants.QUERY_PARAM_INDEX ) String strIndex,
@@ -102,8 +103,9 @@ public class DemandNotificationRestService
         DemandResult result = new DemandResult( );
         if ( StringUtils.isEmpty( strCustomerId ) )
         {
-            result.setStatus( SearchResult.ERROR_FIELD_MANDATORY );
-            result.setErrorMessage( NotificationStoreConstants.MESSAGE_ERROR_DEMAND );
+        	result.setStatus( ResponseStatusFactory.badRequest( )
+        			.setMessage(NotificationStoreConstants.MESSAGE_ERROR_DEMAND )
+        			.setMessageKey(SearchResult.ERROR_FIELD_MANDATORY));
             return Response.status( Response.Status.BAD_REQUEST ).entity( NotificationStoreUtils.convertToJsonString( result ) ).build( );
         }
 
@@ -139,8 +141,11 @@ public class DemandNotificationRestService
         DemandResult result = new DemandResult( );
         if ( StringUtils.isEmpty( strCustomerId ) || StringUtils.isEmpty( strListStatus ) )
         {
-            result.setStatus( SearchResult.ERROR_FIELD_MANDATORY );
-            result.setErrorMessage( NotificationStoreConstants.MESSAGE_ERROR_STATUS );
+        	result.setStatus( ResponseStatusFactory.badRequest( ) );
+        			
+        	result.setStatus( ResponseStatusFactory.badRequest( )
+        			.setMessage( NotificationStoreConstants.MESSAGE_ERROR_STATUS )
+        			.setMessageKey(SearchResult.ERROR_FIELD_MANDATORY));
 
             return Response.status( Response.Status.BAD_REQUEST ).entity( NotificationStoreUtils.convertToJsonString( result ) ).build( );
         }
@@ -170,11 +175,20 @@ public class DemandNotificationRestService
             result.setListDemandDisplay( getListDemandDisplay( paginator.getPageItems( ) ) );
             result.setIndex( String.valueOf( nIndex ) );
             result.setPaginator( nIndex + "/" + paginator.getPagesCount( ) );
-            result.setStatus( Response.Status.OK.name( ) );
             result.setNumberResult( listIds.size( ) );
+            
+            result.setStatus( ResponseStatusFactory.ok( ) );
         }
-
-        return Response.status( Response.Status.OK ).entity( NotificationStoreUtils.convertToJsonString( result ) ).build( );
+        else
+        {
+        	result.setStatus( ResponseStatusFactory.noResult( ).setMessageKey( "no_result" ) );
+        }
+        
+        return Response.status( result.getStatus( ).getHttpCode( ) ).entity( result ).build( );
+        
+        // extends ResponseDto
+        //return Response.status( Response.Status.OK  ).entity( entity ).type( MediaType.APPLICATION_JSON_TYPE ).build( );
+        //return Response.status( entity.getStatus( ).getHttpCode( ) ).entity( entity ).type( MediaType.APPLICATION_JSON_TYPE ).build( );
     }
 
     /**
@@ -230,50 +244,5 @@ public class DemandNotificationRestService
         return StringUtils.EMPTY;
     }
 
-    /**
-     * Gets list of notification
-     * 
-     * @param strIdDemand
-     */
-    @GET
-    @Path( NotificationStoreConstants.PATH_NOTIFICATION )
-    @Produces( MediaType.APPLICATION_JSON )
-    public Response getListNotification( @QueryParam( NotificationStoreConstants.QUERY_PARAM_ID_DEMAND ) String strIdDemand,
-            @QueryParam( NotificationStoreConstants.QUERY_PARAM_ID_DEMAND_TYPE ) String strIdDemandType,
-            @QueryParam( NotificationStoreConstants.QUERY_PARAM_CUSTOMER_ID ) String strCustomerId )
-    {
-        NotificationResult result = new NotificationResult( );
 
-        if ( StringUtils.isNotEmpty( strIdDemand ) && StringUtils.isNotEmpty( strIdDemandType ) && StringUtils.isNotEmpty( strCustomerId ) )
-        {
-
-            List<Notification> notifications = NotificationHome.getByDemandIdTypeIdCustomerId( strIdDemand, strIdDemandType, strCustomerId );
-
-            result.setNotifications( notifications );
-            result.setStatus( Response.Status.OK.name( ) );
-            result.setNumberResult( notifications.size( ) );
-
-            return Response.status( Response.Status.OK ).entity( NotificationStoreUtils.convertToJsonString( result ) ).build( );
-        }
-        else
-        {
-            result.setStatus( SearchResult.ERROR_FIELD_MANDATORY );
-            result.setErrorMessage( NotificationStoreConstants.MESSAGE_ERROR_NOTIF );
-            return Response.status( Response.Status.BAD_REQUEST ).entity( NotificationStoreUtils.convertToJsonString( result ) ).build( );
-        }
-    }
-
-    /**
-     * Gets list of notification types
-     * 
-     * @return list of demand types
-     */
-    @GET
-    @Path( NotificationStoreConstants.PATH_TYPE_NOTIFICATION )
-    @Produces( MediaType.APPLICATION_JSON )
-    public Response getNotificationTypes( )
-    {
-        String strResult = NotificationStoreUtils.convertToJsonString( EnumNotificationType.values( ) );
-        return Response.ok( strResult ).build( );
-    }
 }

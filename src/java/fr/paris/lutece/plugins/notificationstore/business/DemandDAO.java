@@ -159,7 +159,7 @@ public final class DemandDAO implements IDemandDAO
     {
         List<Demand> listDemands = new ArrayList<>( );
 
-        if ( listIds.isEmpty( ) )
+        if ( listIds == null || listIds.isEmpty( ) )
             return listDemands;
 
         String sql = String.format( SQL_QUERY_DEMAND_SELECT_BY_IDS, listIds.stream( ).map( v -> "?" ).collect( Collectors.joining( ", " ) ) );

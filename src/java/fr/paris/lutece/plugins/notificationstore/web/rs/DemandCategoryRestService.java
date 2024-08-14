@@ -62,7 +62,7 @@ import fr.paris.lutece.util.json.JsonUtil;
  * CategoryRest
  *
  */
-@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.PATH_CATEGORY )
+@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.VERSION_PATH_V3 + NotificationStoreConstants.PATH_CATEGORY )
 public class DemandCategoryRestService
 {
 
@@ -72,7 +72,7 @@ public class DemandCategoryRestService
      * @return the DemandCategory List
      */
     @GET
-    @Path( StringUtils.EMPTY )
+    @Path( NotificationStoreConstants.PATH_LIST )
     @Produces( MediaType.APPLICATION_JSON )
     public Response getDemandCategoryList( )
     {
@@ -98,7 +98,6 @@ public class DemandCategoryRestService
      * @return the DemandCategory if created
      */
     @POST
-    @Path( StringUtils.EMPTY )
     @Produces( MediaType.APPLICATION_JSON )
     public Response createDemandCategory( @FormParam( NotificationStoreConstants.DEMANDCATEGORY_ATTRIBUTE_CODE ) String code, 
             @FormParam( NotificationStoreConstants.DEMANDCATEGORY_ATTRIBUTE_LABEL ) String label )

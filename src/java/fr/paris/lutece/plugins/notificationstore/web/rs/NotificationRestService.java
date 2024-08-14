@@ -33,18 +33,32 @@
  */
 package fr.paris.lutece.plugins.notificationstore.web.rs;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.StringUtils;
+
+import fr.paris.lutece.plugins.grubusiness.business.notification.EnumNotificationType;
+import fr.paris.lutece.plugins.grubusiness.business.notification.Notification;
+import fr.paris.lutece.plugins.grubusiness.business.web.rs.NotificationResult;
+import fr.paris.lutece.plugins.grubusiness.business.web.rs.SearchResult;
+import fr.paris.lutece.plugins.grubusiness.business.web.rs.responseStatus.ResponseStatus;
+import fr.paris.lutece.plugins.grubusiness.business.web.rs.responseStatus.ResponseStatusFactory;
+import fr.paris.lutece.plugins.notificationstore.business.NotificationHome;
 import fr.paris.lutece.plugins.notificationstore.service.NotificationService;
 import fr.paris.lutece.plugins.notificationstore.utils.NotificationStoreConstants;
+import fr.paris.lutece.plugins.notificationstore.utils.NotificationStoreUtils;
 import fr.paris.lutece.plugins.rest.service.RestConstants;
 
-@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME )
+@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.VERSION_PATH_V3  )
 public class NotificationRestService
 {
 
@@ -56,7 +70,7 @@ public class NotificationRestService
      * @return The response
      */
     @POST
-    @Path( "notification" )
+    @Path( NotificationStoreConstants.PATH_NOTIFICATION )
     @Consumes( MediaType.APPLICATION_JSON )
     @Produces( MediaType.APPLICATION_JSON )
     public Response notification( String strJson )
@@ -74,7 +88,7 @@ public class NotificationRestService
      * @return The response
      */
     @POST
-    @Path( "notificationEvent" )
+    @Path( NotificationStoreConstants.PATH_NOTIFICATION_EVENT )
     @Consumes( MediaType.APPLICATION_JSON )
     @Produces( MediaType.APPLICATION_JSON )
     public Response notificationEvent( String strJson )
@@ -83,10 +97,51 @@ public class NotificationRestService
     }
     
      
+    /**
+     * Gets list of notification
+     * 
+     * @param strIdDemand
+     */
+    @GET
+    @Path( NotificationStoreConstants.PATH_NOTIFICATION + NotificationStoreConstants.PATH_LIST)
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response getListNotification( @QueryParam( NotificationStoreConstants.QUERY_PARAM_ID_DEMAND ) String strIdDemand,
+            @QueryParam( NotificationStoreConstants.QUERY_PARAM_ID_DEMAND_TYPE ) String strIdDemandType,
+            @QueryParam( NotificationStoreConstants.QUERY_PARAM_CUSTOMER_ID ) String strCustomerId )
+    {
+        NotificationResult result = new NotificationResult( );
 
- 
+        if ( StringUtils.isNotEmpty( strIdDemand ) && StringUtils.isNotEmpty( strIdDemandType ) && StringUtils.isNotEmpty( strCustomerId ) )
+        {
+
+            List<Notification> notifications = NotificationHome.getByDemandIdTypeIdCustomerId( strIdDemand, strIdDemandType, strCustomerId );
+
+            result.setNotifications( notifications );
+            result.setStatus( ResponseStatusFactory.ok( ) );
+            result.setNumberResult( notifications.size( ) );
+
+            return Response.status( Response.Status.OK ).entity( NotificationStoreUtils.convertToJsonString( result ) ).build( );
+        }
+        else
+        {
+        	result.setStatus( ResponseStatusFactory.badRequest( ).setMessage( NotificationStoreConstants.MESSAGE_ERROR_NOTIF ).setMessageKey( SearchResult.ERROR_FIELD_MANDATORY) );
+            
+            return Response.status( Response.Status.BAD_REQUEST ).entity( NotificationStoreUtils.convertToJsonString( result ) ).build( );
+        }
+    }
     
-
-
+    /**
+     * Gets list of notification types
+     * 
+     * @return list of demand types
+     */
+    @GET
+    @Path( NotificationStoreConstants.PATH_NOTIFICATION + NotificationStoreConstants.PATH_TYPE_NOTIFICATION )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response getNotificationTypes( )
+    {
+        String strResult = NotificationStoreUtils.convertToJsonString( EnumNotificationType.values( ) );
+        return Response.ok( strResult ).build( );
+    }
 
 }

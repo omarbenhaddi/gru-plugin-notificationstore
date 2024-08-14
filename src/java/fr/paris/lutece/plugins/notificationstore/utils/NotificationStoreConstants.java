@@ -38,15 +38,16 @@ public class NotificationStoreConstants
     // REST CONSTANTS
     public static final String PLUGIN_NAME = "notificationstore";
 
-    public static final String PATH_DEMAND = "/demands";
-    public static final String PATH_NOTIFICATION = "/notifications";
-    public static final String PATH_DEMAND_TYPE = "/demand_types";
+    public static final String PATH_DEMAND = "/demand";
+    public static final String PATH_NOTIFICATION = "/notification";
+    public static final String PATH_NOTIFICATION_EVENT = "/notificationEvent";
+    public static final String PATH_DEMAND_TYPE = "/demandType";
     public static final String PATH_DEMAND_STATUS = "/status";
-    public static final String PATH_GENERIC_STATUS = "/generic_status";
+    public static final String PATH_GENERIC_STATUS = "/genericStatus";
     public static final String PATH_CATEGORY = "/category";
 
-    public static final String PATH_DEMAND_LIST = "list";
-    public static final String PATH_TYPE_NOTIFICATION = "notification_types";
+    public static final String PATH_LIST = "list";
+    public static final String PATH_TYPE_NOTIFICATION = "notificationType";
     public static final String PATH_ID = "/{" + NotificationStoreConstants.ID + "}";
     
     public static final String ID = "id";
@@ -74,8 +75,9 @@ public class NotificationStoreConstants
     public static final String STATUS_201 = "{" + "\"status\":" + "\"201\"" + "}";
     public static final String STATUS_404 = "{" + "\"status\":" + "\"404\"" + "}";
 
-    /** The Constant DEFAULT_INT. */
+    // constants
     public static final int DEFAULT_INT = -1;
+    public static final String VERSION_PATH_V3 = "/v3";
 
     // PROPERTIES
     /** The Constant LIMIT_DEMAND_API_REST. */

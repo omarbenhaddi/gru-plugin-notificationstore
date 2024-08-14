@@ -67,7 +67,7 @@ import fr.paris.lutece.util.json.JsonUtil;
  * StatusRest
  *
  */
-@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.PATH_DEMAND_STATUS )
+@Path( RestConstants.BASE_PATH + NotificationStoreConstants.PLUGIN_NAME + NotificationStoreConstants.VERSION_PATH_V3 + NotificationStoreConstants.PATH_DEMAND_STATUS )
 public class StatusRestService
 {
 
